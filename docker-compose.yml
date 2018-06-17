@@ -1,0 +1,17 @@
+version: '3'
+services:
+  angular:
+    container_name: adam-novotny-com
+    image: adam-novotny-com-img
+    build:
+      context: ./adam_novotny_com
+      dockerfile: Dockerfile
+    volumes:
+      - ./adam_novotny_com:/mnt/app
+    stdin_open: true
+    tty: true
+    restart: always
+    ports:
+      - "4200:4200"
+    command: "ng serve --prod --aot --host 0.0.0.0 --port 4200"
+    

@@ -1,0 +1,28 @@
+<mat-card>
+    <h1 class="mat-headline">{{ (blog | async)?.title }}</h1>
+    <div *ngFor="let i of (blog | async)?.paragraphs">
+        <p *ngIf="i.type == 1" class="mat-body-1">
+            {{ i.text }}
+        </p>
+        <q *ngIf="i.type == 6" class="mat-body-2">
+            {{ i.text }}
+        </q>
+        <p *ngIf="i.type == 7" class="mat-body-2">
+            {{ i.text }}
+        </p>
+        <pre *ngIf="i.type == 8" class="mat-body-1">
+            <code>{{ i.text }}</code>
+        </pre>
+        <ul *ngIf="i.type == 9" class="mat-body-1">
+            <li>
+                {{ i.text }}
+            </li>
+        </ul>
+        <ul *ngIf="i.links.length > 0" class="mat-caption">
+            <li *ngFor="let j of i.links" >
+                <a href="{{j}}" target="_blank">{{j}}<br></a>
+            </li>
+        </ul>
+    </div>
+    <p class="mat-caption">Note: This article in alternative formatting is also available on <a href="{{ (blog | async)?.url_medium }}" target="_blank">Medium</a></p>
+</mat-card>

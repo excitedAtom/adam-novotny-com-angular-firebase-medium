@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/adam-novotny-com",
+    "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+    ]
+  }
+}

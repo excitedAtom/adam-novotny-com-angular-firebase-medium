@@ -1,0 +1,19 @@
+/* Global */
+
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+html {
+    background: url(/assets/images/sky-min.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.mat-card {
+    margin: 10px;
+}
+
+.mat-raised-button.mat-primary {
+    margin: 5px;
+}
