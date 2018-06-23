@@ -26,6 +26,7 @@ def main():
         print("Downloading articles from Medium")
         for i in article_dict:
             article = get_article(article_dict[i])
+            check_article_json_structure(article)
             save_to_pickle(i, article)
     for i in article_dict:
         article_raw = article_from_pickle(i)
@@ -49,6 +50,16 @@ def get_article(url_medium):
     article_str = r.text
     article = json.loads(article_str[16:])
     return article
+
+def check_article_json_structure(article):
+    if not isinstance(article["payload"]["value"]["title"], str):
+        raise Exception("json Medium API changed")
+    if not isinstance(article["payload"]["value"]["uniqueSlug"], str):
+        raise Exception("json Medium API changed")
+    if not isinstance(article["payload"]["value"]["firstPublishedAt"], int):
+        raise Exception("json Medium API changed")
+    if not isinstance(article["payload"]["value"]["content"]["bodyModel"]["paragraphs"], list):
+        raise Exception("json Medium API changed")
 
 def save_to_pickle(name, article):
     with open('blogs/' + name + '.pkl', 'wb') as f:

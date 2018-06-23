@@ -4,10 +4,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Run docker development server
 
-        python script/docker.py
-        >> 1
+        python script/docker.py -a start -m stage
 
 ## SSH into Docker development server
 
-        python script/docker.py
-        >> ssh
+        python script/docker.py -a ssh -m stage
