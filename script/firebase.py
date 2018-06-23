@@ -3,10 +3,6 @@ import os
 import subprocess
 import sys
 
-domain_stage = "https://adamnovotnycom-prod.firebaseapp.com/"
-domain_prod = "https://adamnovotnycom-prod.firebaseapp.com/"
-account = "adam@adamnovotny.com"
-
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--mode", required=True, choices=["stage", "prod"], help="select mode")
 args = vars(ap.parse_args())
