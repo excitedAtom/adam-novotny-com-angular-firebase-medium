@@ -9,19 +9,27 @@
 - Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/)
 - **Example deployment: [adamnovotny.com](https://www.adamnovotny.com)**
 
-## Run docker development server
+## 0) Download articles from Medium and upload content to Firebase
+
+        python script/medium.py -m prod -d y
+
+## 1) Run docker development server
 
         python script/docker.py -a start -m stage
 
-## Run docker production server
+## 2) Run docker production server
 
         python script/docker.py -a start -m prod
 
-## SSH into production container and generate deplyment package
+## 3) SSH into production container and generate deployment package
 
         python script/docker.py -a ssh -m prod
         ng build --prod --aot
 
-## Download articles from Medium and upload content to Firebase
+## 4) Push stage code to Firebase
 
-        python script/medium.py -m prod -d y
+        python script/firebase.py -m stage
+
+## 5) Push production code to Firebase
+
+        python script/firebase.py -m prod
