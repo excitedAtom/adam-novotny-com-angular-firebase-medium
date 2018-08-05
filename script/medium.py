@@ -21,29 +21,22 @@ download = args["download"]
 mode = args["mode"]
 
 def main():
-    article_dict = get_article_dict()
-    if download == "y":
-        print("Downloading articles from Medium")
-        for i in article_dict:
-            article = get_article(article_dict[i])
-            check_article_json_structure(article)
-            save_to_pickle(i, article)
-    for i in article_dict:
-        article_raw = article_from_pickle(i)
-        article_clean = get_clean_article(i, article_raw)
-        print("{} loading to firebase".format(i))
-        insert_article_db(i, article_clean)
-    
-def get_article_dict():
-    article_dict = {}
-    with open('blogs/urls.txt') as f:
-        for line in f:
-            line = line.strip()
-            line_split = line.split("|")
-            name = line_split[0]
-            url = line_split[1]
-            article_dict[name] = url
-    return article_dict
+    load_articles()
+
+def load_articles():
+    db = get_db()
+    db_collection = "medium"
+    docs = db.collection("medium").get()
+    for doc in docs:
+        id = doc.id
+        doc_dict = doc.to_dict()
+        title = doc_dict["title"]
+        url = doc_dict["url"]
+        article = get_article(url)
+        check_article_json_structure(article)
+        article_clean = get_clean_article(title, article)
+        print("{} loading to firebase".format(title))
+        insert_article_db(title, article_clean)
 
 def get_article(url_medium):
     r = requests.get(url_medium)
@@ -60,14 +53,6 @@ def check_article_json_structure(article):
         raise Exception("json Medium API changed")
     if not isinstance(article["payload"]["value"]["content"]["bodyModel"]["paragraphs"], list):
         raise Exception("json Medium API changed")
-
-def save_to_pickle(name, article):
-    with open('blogs/' + name + '.pkl', 'wb') as f:
-        pickle.dump(article, f, pickle.HIGHEST_PROTOCOL)
-
-def article_from_pickle(name):
-    with open('blogs/' + name + '.pkl', 'rb') as f:
-        return pickle.load(f)
 
 def get_db():
     creds_filename = "adamnovotnycom-stage-firebase-adminsdk.json"
