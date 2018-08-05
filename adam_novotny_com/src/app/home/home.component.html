@@ -1,11 +1,10 @@
 <mat-card>
-    <h1 class="mat-headline">Blog</h1>
-    <mat-list role="list">
-        <mat-list-item role="listitem" *ngFor="let i of blog | async">
-            <a routerLink="/blog/{{i.url}}" class="mat-body-2">{{i.title}} - {{i.date_str}}</a>
-            <mat-divider></mat-divider>
-        </mat-list-item>
-    </mat-list>
+    <h1 class="mat-headline">Contacts</h1>
+    <a href="https://github.com/adam5ny" target="_blank" class="mat-body-2">Github <i class="fab fa-github fa-lg"></i></a><span style="margin-right: 1em"></span>
+    <a href="https://keybase.io/adam5ny" target="_blank" class="mat-body-2">Keybase <i class="fab fa-keybase fa-lg"></i></a><span style="margin-right: 1em"></span>
+    <a href="https://www.linkedin.com/in/adam5ny" target="_blank" class="mat-body-2">LinkedIn <i class="fab fa-linkedin fa-lg"></i></a><span style="margin-right: 1em"></span>
+    <a href="https://medium.com/@adam5ny" target="_blank" class="mat-body-2">Medium <i class="fab fa-medium fa-lg"></i></a><span style="margin-right: 1em"></span>
+    <a href="https://twitter.com/adam5ny" target="_blank" class="mat-body-2">Twitter <i class="fab fa-twitter fa-lg"></i></a><span style="margin-right: 1em"></span>
 </mat-card>
 
 <mat-card>
@@ -21,10 +20,11 @@
 </mat-card>
 
 <mat-card>
-    <h1 class="mat-headline">Contact</h1>
-    <button mat-raised-button onclick="window.open('https://github.com/adam5ny','_blank')" color="primary">Github <i class="fab fa-github fa-lg"></i></button>
-    <button mat-raised-button onclick="window.open('https://keybase.io/adam5ny','_blank')" color="primary">Keybase <i class="fab fa-keybase fa-lg"></i></button>
-    <button mat-raised-button onclick="window.open('https://www.linkedin.com/in/adam5ny','_blank')" color="primary">LinkedIn <i class="fab fa-linkedin fa-lg"></i></button>
-    <button mat-raised-button onclick="window.open('https://medium.com/@adam5ny','_blank')" color="primary">Medium <i class="fab fa-medium fa-lg"></i></button>
-    <button mat-raised-button onclick="window.open('https://twitter.com/adam5ny','_blank')" color="primary">Twitter <i class="fab fa-twitter fa-lg"></i></button>
+    <h1 class="mat-headline">Blog</h1>
+    <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let i of blog | async">
+            <a routerLink="/blog/{{i.url}}" class="mat-body-2">{{i.title}} - {{i.date_str}}</a>
+            <mat-divider></mat-divider>
+        </mat-list-item>
+    </mat-list>
 </mat-card>

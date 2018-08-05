@@ -75,15 +75,19 @@ def get_clean_article(name, article):
     for i in range(1, len(paragraphs_medium)): #skip #0, which is the title
         par_clean = {}
         par = paragraphs_medium[i]
-        if (par["type"] == 1 or par["type"] == 6 or par["type"] == 7 or par["type"] == 8
-                or par["type"] == 9 or par["type"] == 10):
+        if (par["type"] == 1 or par["type"] == 4 or par["type"] == 6 or par["type"] == 7 
+                or par["type"] == 8 or par["type"] == 9 or par["type"] == 10):
             par_clean["type"] = par["type"]
             if par["type"] == 8:
                 par_clean["text"] = par["text"]
+            elif par["type"] == 4:
+                # images
+                par_clean["text"] = par["text"]
+                par_clean["id"] = par["metadata"]["id"]
             else:
                 par_clean["text"] = par["text"]
             links = []
-            if "markups" in par:
+            if "markups" in par and par["type"] != 4:
                 for j in par["markups"]:
                     if j["type"] == 3:
                         links.append(j["href"])

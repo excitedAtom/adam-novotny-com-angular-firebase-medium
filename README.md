@@ -11,6 +11,7 @@
 
 ## 0) Download articles from Medium and upload content to Firebase
 
+        >> download images from medium and save to assets/images/[medium_id].jpg
         python script/medium.py -m prod -d y
 
 ## 1) Run docker development server
