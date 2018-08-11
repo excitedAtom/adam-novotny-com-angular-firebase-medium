@@ -76,31 +76,43 @@ def get_clean_article(name, article):
         par_clean = {}
         par = paragraphs_medium[i]
         if (par["type"] == 1 or par["type"] == 4 or par["type"] == 6 or par["type"] == 7 
-                or par["type"] == 8 or par["type"] == 9 or par["type"] == 10):
+                or par["type"] == 8 or par["type"] == 9 or par["type"] == 10,
+                par["type"] == 13):
             par_clean["type"] = par["type"]
             if par["type"] == 8:
                 par_clean["text"] = par["text"]
             elif par["type"] == 4:
-                # images
+                # image
                 par_clean["text"] = par["text"]
                 par_clean["id"] = par["metadata"]["id"]
             else:
                 par_clean["text"] = par["text"]
-            links = []
             if "markups" in par and par["type"] != 4:
-                for j in par["markups"]:
-                    if j["type"] == 3:
-                        links.append(j["href"])
-            par_clean["links"] = links
+                # insert a tags in appropriate places based on start and end index
+                hrefs = par["markups"]
+                len_inserted = 0
+                for i in hrefs:
+                    if i["type"] == 3:
+                        url = i["href"]
+                        start_href = len_inserted + int(i["start"])
+                        start_tag = """<a href="{}" target="_blank">""".format(url)
+                        par_clean["text"] = insert_into_string(start_href, par_clean["text"], start_tag)
+                        len_inserted += len(start_tag)
+                        end_href = len_inserted + int(i["end"])
+                        end_tag = "</a>"
+                        par_clean["text"] = insert_into_string(end_href, par_clean["text"], end_tag)
+                        len_inserted += len(end_tag)
             paragraphs_clean.append(par_clean)
     article_clean["paragraphs"] = paragraphs_clean
     return article_clean
 
 def convert_unix_date(unix_date):
     unix_date = int(unix_date) / 1000
-    date = datetime.datetime.fromtimestamp(unix_date).strftime(
-        '%m/%d/%Y')
+    date = datetime.datetime.fromtimestamp(unix_date).strftime("%b %d, %Y")
     return date
+
+def insert_into_string(index, text, insertion_str):
+    return text[:index] + insertion_str + text[index:]
 
 def insert_article_db(name, data_dict):
     db = get_db()

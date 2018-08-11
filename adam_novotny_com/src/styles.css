@@ -3,17 +3,46 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 html {
-    background: url(/assets/images/sky-min.jpg) no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+    background-color: darkblue;
 }
 
 .mat-card {
-    margin: 5px;
+    margin: 3px;
 }
 
 .mat-raised-button.mat-primary {
-    margin: 5px;
+    margin: 3px;
+}
+
+.mat-list-item {
+    padding-top: 5px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 5px;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+}
+
+@media screen and (min-width: 600px) {
+    html {
+        background: url(/assets/images/sky-min.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    
+    .mat-card {
+        margin: 5px;
+    }
+    
+    .mat-raised-button.mat-primary {
+        margin: 5px;
+    }
 }
