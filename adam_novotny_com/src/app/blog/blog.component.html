@@ -1,9 +1,9 @@
 <mat-card>
     <h1 class="mat-headline">{{ (blog | async)?.title }}</h1>
     <div *ngFor="let i of (blog | async)?.paragraphs">
-        <p *ngIf="i.type == 13" class="title" [innerHTML]="i.text">
-        </p>
         <p *ngIf="i.type == 1" class="mat-body-1" [innerHTML]="i.text">
+        </p>
+        <p *ngIf="i.type == 3" class="title" [innerHTML]="i.text">
         </p>
         <img *ngIf="i.type == 4" style="width: 100%" src="assets/images/{{ i.id }}.jpg" alt="{{ i.text }}">
         <p *ngIf="i.type == 4" class="mat-body-1" style="color: grey" [innerHTML]="i.text">
@@ -19,6 +19,8 @@
             <li [innerHTML]="i.text">
             </li>
         </ul>
+        <p *ngIf="i.type == 13" class="title" [innerHTML]="i.text">
+        </p>
     </div>
     <p class="mat-caption">Note: This article is also available on <a href="{{ (blog | async)?.url_medium }}" target="_blank">Medium</a></p>
 </mat-card>

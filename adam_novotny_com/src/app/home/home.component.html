@@ -1,5 +1,19 @@
 <mat-card>
-    <h1 class="mat-headline">Contacts</h1>
+    <h1 class="mat-headline">Think</h1>
+    <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let i of randomQuoteIdx">
+            <h4 matLine><a [href]="quotes[i]['url']" target="_blank" class="mat-body-2">{{quotes[i]['author']}}</a></h4>
+            <p matLine>
+                <span>{{quotes[i]['quote']}}</span>
+            </p>
+            <mat-divider></mat-divider>
+        </mat-list-item>
+    </mat-list>
+    <button mat-button (click)="generateRandomIdx()">Refresh</button>
+</mat-card>
+
+<mat-card>
+    <h1 class="mat-headline">Speak</h1>
     <a href="https://github.com/adam5ny" target="_blank" class="mat-body-2">Github <i class="fab fa-github fa-lg"></i></a><span style="margin-right: 1em"></span>
     <a href="https://keybase.io/adam5ny" target="_blank" class="mat-body-2">Keybase <i class="fab fa-keybase fa-lg"></i></a><span style="margin-right: 1em"></span>
     <a href="https://www.linkedin.com/in/adam5ny" target="_blank" class="mat-body-2">LinkedIn <i class="fab fa-linkedin fa-lg"></i></a><span style="margin-right: 1em"></span>
@@ -8,22 +22,7 @@
 </mat-card>
 
 <mat-card>
-    <h1 class="mat-headline">Food For Thought</h1>
-    <mat-list role="list">
-        <mat-list-item role="listitem">
-            <h4 mat-line><a href="https://en.wikipedia.org/wiki/V%C3%A1clav_Havel" target="_blank" class="mat-body-2">Vaclav Havel</a></h4>
-            <p mat-line>Truth and love will overcome lies and hatred</p>
-            <mat-divider></mat-divider>
-        </mat-list-item>
-        <mat-list-item role="listitem">
-            <p mat-line><a href="https://en.wikipedia.org/wiki/Mahatma_Gandhi" target="_blank" class="mat-body-2">Mahatma Gandhi</a></p>
-            <p mat-line>Live as if you were to die tomorrow. Learn as if you were to live forever</p>
-        </mat-list-item>
-    </mat-list>
-</mat-card>
-
-<mat-card>
-    <h1 class="mat-headline">Blog</h1>
+    <h1 class="mat-headline">Write</h1>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let i of blog | async">
             <h4 mat-line><a routerLink="/blog/{{i.url}}" class="mat-body-2">{{i.title}}</a></h4>

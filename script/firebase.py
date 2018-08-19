@@ -16,12 +16,15 @@ def main():
     build_ok = input(request_str)
     if build_ok != "y":
         sys.exit("Invalid input")
+    project = "adam-novotny-com-stage"
+    if mode == "prod":
+        project = "adamnovotnycom-prod"
     subprocess.call("""
     cd adam_novotny_com;
     firebase login;
     firebase use {};
     firebase deploy;
-    """.format(mode), shell=True)
+    """.format(project), shell=True)
 
 
 if __name__ == "__main__":

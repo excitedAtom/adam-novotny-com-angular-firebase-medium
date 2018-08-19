@@ -13,5 +13,5 @@ services:
     restart: always
     ports:
       - "4200:4200"
-    command: "ng serve --prod --aot --host 0.0.0.0 --port 4200"
+    command: "ng serve --watch --host 0.0.0.0 --port 4200"
     

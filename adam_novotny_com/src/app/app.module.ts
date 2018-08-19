@@ -4,6 +4,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule, MatCardModule, MatListModule, MatToolbarModule } from '@angular/material';
 import { NgModule } from '@angular/core';
 
@@ -22,6 +23,7 @@ import { BlogComponent } from './blog/blog.component';
     AngularFirestoreModule,
     AppRoutingModule,
     BrowserModule,
+    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatListModule,

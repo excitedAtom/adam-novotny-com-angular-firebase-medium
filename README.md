@@ -15,23 +15,16 @@
         >> download images from medium and save to assets/images/[medium_id].jpg
         python script/medium.py -m prod -d y
 
-## 1) Run docker development server
+## 1) Run docker development server, build and deploy
 
         python script/docker.py -a start -m stage
+        python script/docker.py -a ssh -m stage
+        ng build --aot
+        python script/firebase.py -m stage
 
 ## 2) Run docker production server
 
         python script/docker.py -a start -m prod
-
-## 3) SSH into production container and generate deployment package
-
         python script/docker.py -a ssh -m prod
         ng build --prod --aot
-
-## 4) Push stage code to Firebase
-
-        python script/firebase.py -m stage
-
-## 5) Push production code to Firebase
-
         python script/firebase.py -m prod
