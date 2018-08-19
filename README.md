@@ -6,7 +6,7 @@
   - blogs are published to Medium first
   - a simple Python script is then used to download json-formatted articles from Medium and upload content to [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/) to be hosted on custom website
   - the script can be run periodically as a serverless function
-- Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/)
+- Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/), [Google Sheets](https://www.google.com/sheets)
 - **Example deployment: [adamnovotny.com](https://www.adamnovotny.com)**
 
 ## 0) Download articles from Medium and upload content to Firebase
