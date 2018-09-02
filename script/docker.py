@@ -19,6 +19,7 @@ def main():
     elif action == "stop":
         docker_stop()
     elif action == "rm":
+        docker_stop()
         docker_rm()
     elif action == "ssh":
         docker_ssh()

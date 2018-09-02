@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+    numQuotesShow = 1;
     blog: Observable<any[]>;
     quotes: any[] = [];
     quotesUrl = 'https://spreadsheets.google.com/feeds/list/1g6UwXwvHwpAQcNwkrR5CszdU2eIEDP02y1OGr3V5H40/od6/public/basic?alt=json';
@@ -59,7 +60,7 @@ export class HomeComponent implements OnInit {
         Generates random array of < x numbers
         */
         this.randomQuoteIdx = [];
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < this.numQuotesShow; i++) {
             let number = Math.floor(Math.random() * (this.quotes.length - 1));
             while (this.randomQuoteIdx.includes(number)) {
                 number = Math.floor(Math.random() * (this.quotes.length - 1));
