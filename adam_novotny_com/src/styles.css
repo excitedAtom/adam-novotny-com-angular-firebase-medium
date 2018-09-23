@@ -6,12 +6,31 @@ html {
     background-color: darkblue;
 }
 
+.grid-33 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 16px;
+}
+
+.header {
+    margin: 3px;
+    text-align: center;
+}
+
+h1.mat-headline {
+    margin: 0px;
+}
+
+#main-logo {
+    height: 96px;
+}
+
 .mat-card {
     margin: 3px;
 }
 
-.mat-raised-button.mat-primary {
-    margin: 3px;
+.mat-card.mat-card {
+    padding: 16px;
 }
 
 .mat-list-item {
@@ -37,12 +56,13 @@ pre {
         -o-background-size: cover;
         background-size: cover;
     }
-    
-    .mat-card {
+
+    .header {
         margin: 5px;
+        text-align: center;
     }
     
-    .mat-raised-button.mat-primary {
+    .mat-card {
         margin: 5px;
     }
 }
