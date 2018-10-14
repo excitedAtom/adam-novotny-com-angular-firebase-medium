@@ -1,28 +1,14 @@
 <mat-card>
-    <h1 class="mat-headline">Think</h1>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let i of randomQuoteIdx">
-            <h4 matLine><a [href]="quotes[i]['url']" target="_blank" class="mat-body-2">{{quotes[i]['author']}}</a></h4>
-            <p matLine>
-                <span>{{quotes[i]['quote']}}</span>
-            </p>
+            <i matLine>{{quotes[i]['quote']}}</i>
+            <p matLine>~ <a [href]="quotes[i]['url']" class="mat-body-2">{{quotes[i]['author']}}</a></p>
         </mat-list-item>
     </mat-list>
 </mat-card>
 
 <mat-card>
-    <h1 class="mat-headline">Speak</h1>
-        <div class="grid-33">
-            <div><a href="https://github.com/adam5ny" target="_blank" class="mat-body-2">Github <i class="fab fa-github fa-lg"></i></a></div>
-            <div><a href="https://keybase.io/adam5ny" target="_blank" class="mat-body-2">Keybase <i class="fab fa-keybase fa-lg"></i></a></div>
-            <div><a href="https://www.linkedin.com/in/adam5ny" target="_blank" class="mat-body-2">LinkedIn <i class="fab fa-linkedin fa-lg"></i></a></div>
-            <div><a href="https://medium.com/@adam5ny" target="_blank" class="mat-body-2">Medium <i class="fab fa-medium fa-lg"></i></a></div>
-            <div><a href="https://twitter.com/adam5ny" target="_blank" class="mat-body-2">Twitter <i class="fab fa-twitter fa-lg"></i></a></div>
-        </div>
-</mat-card>
-
-<mat-card>
-    <h1 class="mat-headline">Write</h1>
+    <h1 class="mat-headline">Blog</h1>
     <mat-list role="list">
         <mat-list-item role="listitem" *ngFor="let i of blog | async">
             <h4 mat-line><a routerLink="/blog/{{i.url}}" class="mat-body-2">{{i.title}}</a></h4>

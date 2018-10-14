@@ -15,9 +15,7 @@ from google.cloud import firestore
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--mode", required=True, choices=["stage", "prod"], help="mode")
-ap.add_argument("-d", "--download", required=True, choices=["y", "n"], help="download articles")
 args = vars(ap.parse_args())
-download = args["download"]
 mode = args["mode"]
 
 def main():
@@ -27,16 +25,28 @@ def load_articles():
     db = get_db()
     db_collection = "medium"
     docs = db.collection("medium").get()
+    i = 0
     for doc in docs:
-        id = doc.id
         doc_dict = doc.to_dict()
         title = doc_dict["title"]
-        url = doc_dict["url"]
-        article = get_article(url)
-        check_article_json_structure(article)
-        article_clean = get_clean_article(title, article)
-        print("{} loading to firebase".format(title))
-        insert_article_db(title, article_clean)
+        print("{} - {}".format(i, title))
+        i += 1
+    downloads = input("Select titles to download. Enter numbers separated by ',' or 'all': ")
+    downloads = [x.strip() for x in downloads.split(",")]
+    i = 0
+    docs = db.collection("medium").get()
+    for doc in docs:
+        if "all" in downloads or str(i) in downloads:
+            id = doc.id
+            doc_dict = doc.to_dict()
+            title = doc_dict["title"]
+            url = doc_dict["url"]
+            article = get_article(url)
+            check_article_json_structure(article)
+            article_clean = get_clean_article(title, article)
+            print("{} loading to firebase".format(title))
+            insert_article_db(title, article_clean)
+        i += 1
 
 def get_article(url_medium):
     r = requests.get(url_medium)

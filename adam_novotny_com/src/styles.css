@@ -6,15 +6,20 @@ html {
     background-color: darkblue;
 }
 
-.grid-33 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    padding: 16px;
+.contact-header {
+    color: white;
 }
 
-.header {
+.grid-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     margin: 3px;
-    text-align: center;
+}
+
+.grid-contacts {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: right;
 }
 
 h1.mat-headline {
@@ -22,7 +27,7 @@ h1.mat-headline {
 }
 
 #main-logo {
-    height: 96px;
+    height: 120px;
 }
 
 .mat-card {
@@ -55,6 +60,10 @@ pre {
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
+    }
+
+    .grid-header {
+        margin: 5px;
     }
 
     .header {
