@@ -46,9 +46,9 @@ def generate_docker_compose():
     destination_dir = os.path.join(os.path.abspath(os.curdir))
     if not os.path.isdir(destination_dir):
         os.makedirs(destination_dir)
-    command = "ng serve --watch --host 0.0.0.0 --port 4200"
+    command = "bash -c 'cd /mnt/app && npm install && ng serve --watch --host 0.0.0.0 --port 4200'"
     if mode == "prod":
-        command = "ng serve --prod --aot --host 0.0.0.0 --port 4200"
+        command = "bash -c 'cd /mnt/app && npm install && ng serve --prod --aot --host 0.0.0.0 --port 4200'"
     file_text = (
 """version: '3'
 services:
