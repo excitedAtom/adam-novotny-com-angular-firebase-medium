@@ -43,7 +43,7 @@ def docker_rm():
 
 def generate_docker_compose():
     filename = 'docker-compose.yml'
-    destination_dir = os.path.join(os.path.abspath(os.curdir))
+    destination_dir = os.path.join(os.path.abspath(os.curdir), "www")
     if not os.path.isdir(destination_dir):
         os.makedirs(destination_dir)
     command = "bash -c 'cd /mnt/app && npm install && ng serve --watch --host 0.0.0.0 --port 4200'"

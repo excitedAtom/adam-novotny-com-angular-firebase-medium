@@ -1,12 +1,12 @@
 # adam-novotny-com-angular-firebase-medium
 
-- The application serves a custom Firebase-hosted website and a blog.
+- The application serves a custom Firebase-hosted website with a blog.
 - Use case: publishers can to take advantage of excellent distribution platforms such as Medium, while keeping direct ownership of the content in case the distribution platform no longer supports or removes the content.
 - Workflow: 
   - blogs are published to Medium first
   - a simple Python script is then used to download json-formatted articles from Medium and upload content to [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore/) to be hosted on custom website
   - the script can be run periodically as a serverless function
-- Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/), [Google Sheets](https://www.google.com/sheets)
+- Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/)
 - **Example deployment: [adamnovotny.com](https://www.adamnovotny.com)**
 
 ## 0) Download articles from Medium and upload content to Firebase
@@ -18,14 +18,15 @@
 
 ## 1) Run docker development server, build and deploy
 
-        python script/docker.py -a start -m stage
-        python script/docker.py -a ssh -m stage
+        python script/docker.py -m stage -a start
+        python script/docker.py -m stage -a ssh
+        npm audit fix
         ng build --aot
         python script/firebase.py -m stage
 
 ## 2) Run docker production server
 
-        python script/docker.py -a start -m prod
-        python script/docker.py -a ssh -m prod
+        python script/docker.py -m prod -a start
+        python script/docker.py -m prod -a ssh
         ng build --prod --aot
         python script/firebase.py -m prod
