@@ -9,24 +9,19 @@
 - Tech stack: [Angular](https://angular.io) front end, [Firebase](https://firebase.google.com) backend, [Medium.com](https://www.medium.com) blog publishing platform, [Python 3](https://www.python.org/downloads/release/python-360/)
 - **Example deployment: [adamnovotny.com](https://www.adamnovotny.com)**
 
-## 0) Download articles from Medium and upload content to Firebase
+## Download articles from Medium and upload content to Firebase
 
         >> save new article titles and urls in firestore/medium/{id}
         >> download images from medium and save to assets/images/[medium_id].jpg
         python script/medium.py -m stage
         python script/medium.py -m prod
 
-## 1) Run docker development server, build and deploy
+## Run docker development server, build and deploy
 
-        python script/docker.py -m stage -a start
-        python script/docker.py -m stage -a ssh
+        python script/docker.py -m [stage/prod] -a start
+        # separate terminal:
+        python script/docker.py -m [stage/prod] -a ssh
         npm audit fix
-        ng build --aot
-        python script/firebase.py -m stage
-
-## 2) Run docker production server
-
-        python script/docker.py -m prod -a start
-        python script/docker.py -m prod -a ssh
-        ng build --prod --aot
-        python script/firebase.py -m prod
+        ng build [--prod] --aot
+        # local machine:
+        python script/firebase.py -m [stage/prod]
