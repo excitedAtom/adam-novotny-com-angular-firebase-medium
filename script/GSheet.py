@@ -1,7 +1,7 @@
 import json
 import requests
 
-def main(sheet_url = "https://spreadsheets.google.com/feeds/list/1nX-J1njnwMlCPdCjvZ9e8_jaf25sDQIbtaghirQxQ5k/od6/public/basic?alt=json"):
+def main(sheet_url):
     """
     args:
         sheet_url: str => Google Sheet link

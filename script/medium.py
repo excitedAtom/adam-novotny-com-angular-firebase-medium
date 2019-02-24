@@ -1,5 +1,5 @@
-# Converts json article from medium to firestore database
-# Example url: https://medium.com/@adamnovo/50-percent-of-2017-icos-have-failed-already-66eddefaacc7?format=json
+# Converts json article from Medium to Firestore database
+# Example url: https://medium.com/@adamnovo/50-percent-of-2017-icos-have-failed-already-66eddefaacc7
 # Requirements
 #   - save service-account-creds.json Gcloud file in folder instance/
 #   - pip install --upgrade google-cloud-firestore
@@ -12,41 +12,34 @@ import os
 import pickle
 import sys
 from google.cloud import firestore
+from google.cloud import storage
+
+import GSheet
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-m", "--mode", required=True, choices=["stage", "prod"], help="mode")
+ap.add_argument("-b", "--backup", required=True, choices=["y", "n"], help="Backup data to firebase storage")
 args = vars(ap.parse_args())
 mode = args["mode"]
+backup = args["backup"]
+
+os.environ["mode"] = mode
+from secrets import creds_filename, bucket_name, medium_posts_gsheet
 
 def main():
-    load_articles()
-
-def load_articles():
-    db = get_db()
-    db_collection = "medium"
-    docs = db.collection("medium").get()
-    i = 0
-    for doc in docs:
-        doc_dict = doc.to_dict()
-        title = doc_dict["title"]
-        print("{} - {}".format(i, title))
-        i += 1
-    downloads = input("Select titles to download. Enter numbers separated by ',' or 'all': ")
-    downloads = [x.strip() for x in downloads.split(",")]
-    i = 0
-    docs = db.collection("medium").get()
-    for doc in docs:
-        if "all" in downloads or str(i) in downloads:
-            id = doc.id
-            doc_dict = doc.to_dict()
-            title = doc_dict["title"]
-            url = doc_dict["url"]
-            article = get_article(url)
-            check_article_json_structure(article)
-            article_clean = get_clean_article(title, article)
-            print("{} loading to firebase".format(title))
-            insert_article_db(title, article_clean)
-        i += 1
+    init_firebase()
+    headers, rows = GSheet.main(medium_posts_gsheet)
+    for row in rows:
+        for i in range(len(headers)):
+            if headers[i] == "title":
+                title = row[i]
+            elif headers[i] == "url":
+                url = row[i] + "?format=json"
+        print("{} moving from medium to firebase".format(title))
+        article = get_article(url)
+        check_article_json_structure(article)
+        article_clean = get_clean_article(title, article)
+        insert_article_db(title, article_clean)
 
 def get_article(url_medium):
     r = requests.get(url_medium)
@@ -64,20 +57,15 @@ def check_article_json_structure(article):
     if not isinstance(article["payload"]["value"]["content"]["bodyModel"]["paragraphs"], list):
         raise Exception("json Medium API changed")
 
-def get_db():
-    creds_filename = "adamnovotnycom-stage-firebase-adminsdk.json"
-    if mode == "prod":
-        creds_filename = "adamnovotnycom-prod-firebase-adminsdk.json"
+def init_firebase():
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.abspath(os.path.join(
         os.path.dirname( __file__ ), "instance", creds_filename))
-    db = firestore.Client()
-    return db
 
 def get_clean_article(name, article):
     article_clean = {}
     article_clean["url"] = name
     article_clean["title"] = article["payload"]["value"]["title"]
-    article_clean["url_medium"] = "https://medium.com/@adam5ny/" + article["payload"]["value"]["uniqueSlug"]
+    article_clean["url_medium"] = "https://medium.com/@excitedAtom/" + article["payload"]["value"]["uniqueSlug"]
     article_clean["date_unix"] = article["payload"]["value"]["firstPublishedAt"]
     article_clean["date_str"] = convert_unix_date(article["payload"]["value"]["firstPublishedAt"])
     paragraphs_clean = []
@@ -95,6 +83,8 @@ def get_clean_article(name, article):
                 # image
                 par_clean["text"] = par["text"]
                 par_clean["id"] = par["metadata"]["id"]
+                if backup == "y":
+                    backup_image_to_firebase_storage(par_clean["id"])
             else:
                 par_clean["text"] = par["text"]
             if "markups" in par and par["type"] != 4:
@@ -125,10 +115,28 @@ def insert_into_string(index, text, insertion_str):
     return text[:index] + insertion_str + text[index:]
 
 def insert_article_db(name, data_dict):
-    db = get_db()
+    db = firestore.Client()
     db_collection = "blog"
     collection_ref = db.collection(db_collection).document(name)
     collection_ref.set(data_dict)
+
+def backup_image_to_firebase_storage(image_id):
+    url = "https://cdn-images-1.medium.com/max/2600/{}".format(image_id)
+    local_filename = download_file(url, image_id)
+    storage_client = storage.Client()
+    bucket = storage_client.get_bucket(bucket_name)
+    blob = bucket.blob(image_id)
+    blob.upload_from_filename(local_filename)
+    print("Image {} backed up to firebase".format(image_id))
+
+def download_file(url, image_id):
+    local_filename = os.path.abspath(os.path.join("backup", "images", image_id))
+    with requests.get(url, stream=True) as r:
+        with open(local_filename, "wb") as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+    return local_filename
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,6 @@
 *instance/
+*backup/
+*__pycache__/
 *.firebaserc
 *.DS_Store
 *.cache
